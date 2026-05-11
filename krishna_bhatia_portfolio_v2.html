@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Krishna Bhatia · Data Science & AI Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@300;400;500;700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #07090F;
+  --bg2: #0D1117;
+  --bg3: #111820;
+  --amber: #F59E0B;
+  --amber-dim: rgba(245,158,11,0.12);
+  --teal: #00D4FF;
+  --teal-dim: rgba(0,212,255,0.08);
+  --green: #22C55E;
+  --red: #EF4444;
+  --text: #E2E8F0;
+  --muted: #64748B;
+  --border: rgba(245,158,11,0.12);
+  --border2: rgba(255,255,255,0.06);
+  --glow-a: 0 0 40px rgba(245,158,11,0.18);
+  --glow-t: 0 0 40px rgba(0,212,255,0.12);
+  --fd: 'Bebas Neue', sans-serif;
+  --fm: 'IBM Plex Mono', monospace;
+  --fb: 'IBM Plex Sans', sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:var(--fb);overflow-x:hidden;}
+body::after{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:998;opacity:0.5;}
+#bg{position:fixed;inset:0;z-index:0;pointer-events:none;}
+
+/* TICKER */
+.ticker-wrap{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(7,9,15,0.97);backdrop-filter:blur(24px);border-bottom:1px solid rgba(245,158,11,0.15);height:40px;overflow:hidden;display:flex;align-items:center;}
+.ticker-track{display:flex;animation:scroll-left 32s linear infinite;white-space:nowrap;}
+.ticker-track:hover{animation-play-state:paused;}
+.t-item{display:inline-flex;align-items:center;gap:8px;padding:0 28px;border-right:1px solid rgba(245,158,11,0.1);height:40px;}
+.t-item .lbl{font-family:var(--fm);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--amber);}
+.t-item .val{font-family:var(--fm);font-size:10px;font-weight:700;color:var(--text);letter-spacing:1px;}
+@keyframes scroll-left{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* NAV */
+nav{position:fixed;top:40px;left:0;right:0;z-index:200;background:rgba(7,9,15,0.92);backdrop-filter:blur(24px);border-bottom:1px solid var(--border2);height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 44px;}
+.nav-brand{font-family:var(--fm);font-size:12px;font-weight:700;color:var(--amber);letter-spacing:3px;display:flex;align-items:center;gap:8px;}
+.nav-brand span{color:var(--text);}
+.nav-links{list-style:none;display:flex;gap:32px;align-items:center;}
+.nav-links a{font-family:var(--fm);font-size:9px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+.nav-links a:hover{color:var(--amber);}
+.nav-cta{background:var(--amber)!important;color:var(--bg)!important;padding:7px 18px!important;border-radius:4px;font-weight:700!important;}
+.nav-cta:hover{background:#FCD34D!important;}
+
+/* LAYOUT */
+.page{padding-top:94px;position:relative;z-index:1;}
+.wrap{max-width:1140px;margin:0 auto;padding:0 44px;}
+.sec{padding:96px 0;}
+.sec-tag{font-family:var(--fm);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:var(--amber);margin-bottom:10px;}
+.sec-h{font-family:var(--fd);font-size:clamp(44px,5vw,76px);letter-spacing:3px;line-height:.95;color:var(--text);margin-bottom:52px;}
+.hairline{height:1px;background:linear-gradient(90deg,transparent,rgba(245,158,11,0.13),transparent);}
+
+/* HERO */
+.hero{min-height:calc(100vh - 94px);display:flex;flex-direction:column;justify-content:center;padding:60px 0 80px;}
+.hero-eye{font-family:var(--fm);font-size:10px;letter-spacing:3px;color:var(--amber);text-transform:uppercase;margin-bottom:20px;display:flex;align-items:center;gap:10px;}
+.dot-live{width:7px;height:7px;border-radius:50%;background:var(--green);animation:blink 2s ease infinite;}
+@keyframes blink{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(34,197,94,.4);}50%{opacity:.7;box-shadow:0 0 0 5px transparent;}}
+.hero-name{font-family:var(--fd);font-size:clamp(80px,12vw,160px);letter-spacing:4px;line-height:.88;color:var(--text);margin-bottom:2px;}
+.hero-name .hl{color:var(--amber);display:block;}
+.hero-role{font-family:var(--fm);font-size:12px;letter-spacing:3px;color:var(--muted);text-transform:uppercase;margin:22px 0 28px;}
+.hero-bio{font-size:15px;line-height:1.8;color:#94A3B8;max-width:580px;margin-bottom:36px;}
+.hero-bio strong{color:var(--teal);}
+.cta-row{display:flex;gap:14px;flex-wrap:wrap;}
+.btn-a{background:var(--amber);color:var(--bg);font-family:var(--fm);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:13px 28px;border-radius:4px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s;}
+.btn-a:hover{background:#FCD34D;transform:translateY(-2px);box-shadow:0 8px 24px rgba(245,158,11,.35);}
+.btn-b{background:transparent;color:var(--text);font-family:var(--fm);font-size:10px;letter-spacing:2px;text-transform:uppercase;padding:12px 28px;border-radius:4px;border:1px solid rgba(245,158,11,.2);text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .2s;}
+.btn-b:hover{border-color:var(--amber);color:var(--amber);transform:translateY(-2px);}
+.cert-strip{display:flex;gap:8px;margin-top:36px;flex-wrap:wrap;}
+.cert-chip{font-family:var(--fm);font-size:8px;letter-spacing:1.5px;text-transform:uppercase;padding:5px 12px;border-radius:3px;background:rgba(245,158,11,.06);border:1px solid rgba(245,158,11,.2);color:var(--amber);display:inline-flex;align-items:center;gap:5px;}
+
+/* =========== FEATURED AQI PROJECT =========== */
+.feat-box{background:var(--bg2);border:1px solid rgba(245,158,11,.22);border-radius:18px;overflow:hidden;position:relative;}
+.feat-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--amber),var(--teal),var(--green));}
+.feat-top{background:linear-gradient(135deg,#1C0E00 0%,#0D1A0D 50%,#001B22 100%);padding:48px;display:grid;grid-template-columns:1fr 240px;gap:48px;align-items:start;border-bottom:1px solid var(--border);}
+.feat-badge{font-family:var(--fm);font-size:8px;letter-spacing:2px;text-transform:uppercase;padding:4px 11px;background:var(--amber);color:var(--bg);border-radius:3px;font-weight:700;display:inline-block;margin-bottom:16px;}
+.feat-title{font-family:var(--fd);font-size:clamp(28px,3.5vw,50px);letter-spacing:2px;color:var(--text);line-height:1;margin-bottom:14px;}
+.feat-sub{font-family:var(--fm);font-size:10px;color:var(--teal);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:20px;}
+.feat-desc{font-size:13px;line-height:1.8;color:#94A3B8;margin-bottom:24px;}
+.feat-cta{font-family:var(--fm);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--amber);text-decoration:none;display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(245,158,11,.3);padding:8px 16px;border-radius:4px;transition:all .2s;}
+.feat-cta:hover{background:var(--amber-dim);transform:translateX(4px);}
+
+/* Model card inside featured */
+.model-card{background:rgba(0,0,0,.45);border:1px solid rgba(245,158,11,.15);border-radius:12px;padding:22px;font-family:var(--fm);}
+.mc-head{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--amber);padding-bottom:10px;border-bottom:1px solid var(--border);margin-bottom:14px;}
+.mc-row{display:flex;justify-content:space-between;margin-bottom:9px;font-size:10px;}
+.mc-k{color:var(--muted);}
+.mc-v{color:var(--text);font-weight:500;}
+.mc-v.g{color:var(--green);}
+.shap-section{margin-top:16px;padding-top:12px;border-top:1px solid var(--border);}
+.shap-head{font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--teal);margin-bottom:12px;}
+.shap-row{margin-bottom:9px;}
+.shap-label-row{display:flex;justify-content:space-between;font-size:9px;margin-bottom:3px;}
+.shap-k{color:var(--muted);}
+.shap-v{color:var(--amber);}
+.shap-bar{height:3px;border-radius:2px;background:rgba(255,255,255,.05);}
+.shap-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--amber),var(--teal));}
+
+/* Stats bar */
+.feat-stats{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--border);}
+.fstat{padding:22px 0;text-align:center;border-right:1px solid var(--border);}
+.fstat:last-child{border-right:none;}
+.fstat-n{font-family:var(--fd);font-size:36px;letter-spacing:2px;color:var(--amber);line-height:1;margin-bottom:4px;}
+.fstat-l{font-family:var(--fm);font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);}
+
+/* Feature pills */
+.feat-pills{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;padding:32px 48px;}
+.fpill{background:var(--bg3);border:1px solid var(--border2);border-radius:10px;padding:22px;transition:border-color .3s;}
+.fpill:hover{border-color:rgba(245,158,11,.25);}
+.fp-icon{font-size:20px;margin-bottom:10px;}
+.fp-title{font-family:var(--fm);font-size:10px;font-weight:700;color:var(--amber);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+.fp-desc{font-size:11px;color:var(--muted);line-height:1.65;}
+
+/* TAGS */
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:20px;}
+.tg{font-family:var(--fm);font-size:8px;letter-spacing:1px;text-transform:uppercase;padding:4px 9px;border-radius:3px;border:1px solid;}
+.tg-a{color:var(--amber);border-color:rgba(245,158,11,.28);background:rgba(245,158,11,.05);}
+.tg-t{color:var(--teal);border-color:rgba(0,212,255,.25);background:rgba(0,212,255,.04);}
+.tg-g{color:var(--green);border-color:rgba(34,197,94,.25);background:rgba(34,197,94,.04);}
+
+/* OTHER PROJECTS */
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.pcard{background:var(--bg2);border:1px solid var(--border2);border-radius:12px;padding:28px;position:relative;overflow:hidden;transition:all .3s;}
+.pcard:hover{transform:translateY(-6px);box-shadow:0 20px 48px rgba(0,0,0,.5);}
+.pcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.pcard.a::before{background:var(--amber);}.pcard.t::before{background:var(--teal);}.pcard.g::before{background:var(--green);}
+.pcard:hover.a{border-color:rgba(245,158,11,.25);}
+.pcard:hover.t{border-color:rgba(0,212,255,.2);}
+.pcard:hover.g{border-color:rgba(34,197,94,.2);}
+.p-icon{font-size:26px;margin-bottom:14px;}
+.p-name{font-family:var(--fd);font-size:24px;letter-spacing:1px;color:var(--text);margin-bottom:8px;}
+.p-desc{font-size:11px;color:var(--muted);line-height:1.7;margin-bottom:14px;}
+.p-metric{font-family:var(--fd);font-size:38px;letter-spacing:2px;color:var(--amber);line-height:1;}
+.p-metric-label{font-family:var(--fm);font-size:8px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+
+/* TIMELINE */
+.timeline{padding-left:28px;position:relative;}
+.timeline::before{content:'';position:absolute;left:0;top:8px;bottom:8px;width:1px;background:linear-gradient(180deg,var(--amber),transparent);}
+.tl-item{position:relative;margin-bottom:44px;}
+.tl-item::before{content:'';position:absolute;left:-34px;top:8px;width:12px;height:12px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 3px rgba(245,158,11,.15),0 0 14px rgba(245,158,11,.4);}
+.tl-per{font-family:var(--fm);font-size:9px;letter-spacing:2px;color:var(--amber);text-transform:uppercase;margin-bottom:6px;}
+.tl-role{font-family:var(--fd);font-size:26px;letter-spacing:1px;color:var(--text);margin-bottom:2px;}
+.tl-org{font-size:11px;color:var(--muted);margin-bottom:10px;}
+.tl-desc{font-size:12px;color:#94A3B8;line-height:1.75;max-width:680px;}
+
+/* SKILLS */
+.sk-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.sk-group{background:var(--bg2);border:1px solid var(--border2);border-radius:12px;padding:26px;}
+.sk-head{font-family:var(--fm);font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--amber);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border);}
+.pills{display:flex;flex-wrap:wrap;gap:7px;}
+.pill{font-family:var(--fm);font-size:10px;padding:5px 11px;border-radius:4px;background:var(--bg3);border:1px solid var(--border2);color:var(--text);transition:all .2s;}
+.pill:hover{background:var(--amber-dim);border-color:rgba(245,158,11,.3);color:var(--amber);}
+
+/* EDUCATION */
+.edu-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.edu-c{background:var(--bg2);border:1px solid var(--border2);border-radius:12px;padding:28px 22px;text-align:center;transition:all .3s;}
+.edu-c:hover{transform:translateY(-4px);box-shadow:var(--glow-a);border-color:rgba(245,158,11,.2);}
+.edu-n{font-family:var(--fd);font-size:60px;letter-spacing:2px;background:linear-gradient(135deg,var(--amber) 0%,var(--teal) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin-bottom:10px;}
+.edu-l{font-family:var(--fm);font-size:8px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.edu-i{font-size:10px;color:#475569;line-height:1.5;}
+
+/* ACHIEVEMENTS */
+.ach-list{display:flex;flex-direction:column;gap:12px;}
+.ach-item{display:flex;gap:16px;background:var(--bg2);border:1px solid var(--border2);border-radius:10px;padding:17px 20px;align-items:flex-start;transition:all .25s;}
+.ach-item:hover{border-color:rgba(245,158,11,.2);}
+.ach-icon{font-size:18px;flex-shrink:0;}
+.ach-text{font-size:12px;color:#94A3B8;line-height:1.65;}
+.ach-text strong{color:var(--amber);font-family:var(--fm);font-size:10px;letter-spacing:.5px;display:block;margin-bottom:3px;}
+
+/* CONTACT */
+.contact{text-align:center;padding:80px 0 56px;border-top:1px solid var(--border);}
+.c-big{font-family:var(--fd);font-size:clamp(52px,7vw,96px);letter-spacing:4px;color:var(--text);line-height:.95;margin-bottom:16px;}
+.c-email{font-family:var(--fm);font-size:11px;color:var(--muted);letter-spacing:1.5px;margin-bottom:36px;}
+.c-links{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;}
+.clink{display:flex;align-items:center;gap:7px;background:var(--bg2);border:1px solid var(--border2);border-radius:6px;padding:11px 18px;text-decoration:none;color:var(--muted);font-family:var(--fm);font-size:9px;letter-spacing:1.5px;transition:all .3s;}
+.clink:hover{border-color:var(--amber);color:var(--amber);transform:translateY(-2px);}
+
+/* =========== CHATBOT =========== */
+.chat-fab{position:fixed;bottom:30px;right:30px;width:54px;height:54px;background:var(--amber);border-radius:50%;border:none;cursor:pointer;font-size:20px;z-index:300;box-shadow:0 4px 20px rgba(245,158,11,.4);transition:all .3s;display:flex;align-items:center;justify-content:center;color:var(--bg);}
+.chat-fab:hover{transform:scale(1.1);box-shadow:0 8px 32px rgba(245,158,11,.5);}
+.chat-fab.active{background:#EF4444;}
+
+.chat-win{position:fixed;bottom:96px;right:30px;width:376px;background:var(--bg2);border:1px solid rgba(245,158,11,.25);border-radius:16px;z-index:300;display:none;flex-direction:column;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.7);max-height:500px;}
+.chat-win.active{display:flex;}
+.chat-head{background:linear-gradient(135deg,#1C0E00,#0D1117);padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.ch-info .ch-title{font-family:var(--fm);font-size:11px;font-weight:700;color:var(--amber);letter-spacing:1px;}
+.ch-info .ch-sub{font-family:var(--fm);font-size:8px;color:var(--muted);letter-spacing:.5px;margin-top:2px;}
+.ch-status{display:flex;align-items:center;gap:5px;font-family:var(--fm);font-size:8px;color:var(--green);letter-spacing:1px;}
+
+.chat-msgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;max-height:340px;}
+.chat-msgs::-webkit-scrollbar{width:3px;}
+.chat-msgs::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+.msg{padding:10px 14px;border-radius:10px;font-size:11px;line-height:1.65;max-width:92%;white-space:pre-wrap;}
+.msg-b{background:var(--bg3);border:1px solid var(--border2);color:#CBD5E1;align-self:flex-start;}
+.msg-u{background:var(--amber);color:var(--bg);align-self:flex-end;font-family:var(--fm);font-size:10px;}
+
+.chat-qs{padding:10px 14px;display:flex;flex-wrap:wrap;gap:5px;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:rgba(0,0,0,.2);}
+.cq{font-family:var(--fm);font-size:8px;letter-spacing:.5px;padding:5px 9px;border-radius:3px;border:1px solid rgba(245,158,11,.22);color:var(--amber);background:var(--amber-dim);cursor:pointer;transition:all .2s;}
+.cq:hover{background:var(--amber);color:var(--bg);}
+
+.chat-in-row{padding:10px 12px;display:flex;gap:8px;}
+.chat-in{flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:5px;padding:8px 11px;font-family:var(--fm);font-size:10px;color:var(--text);outline:none;transition:border-color .2s;}
+.chat-in:focus{border-color:var(--amber);}
+.chat-send{background:var(--amber);border:none;border-radius:5px;padding:8px 14px;cursor:pointer;color:var(--bg);font-size:13px;font-weight:700;transition:all .2s;}
+.chat-send:hover{background:#FCD34D;}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .65s ease,transform .65s ease;}
+.rv.show{opacity:1;transform:translateY(0);}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  .feat-top{grid-template-columns:1fr;}
+  .feat-pills{grid-template-columns:1fr;}
+  .feat-stats{grid-template-columns:repeat(3,1fr);}
+  .grid3{grid-template-columns:1fr;}
+  .sk-grid{grid-template-columns:1fr;}
+  .edu-grid{grid-template-columns:1fr;}
+  .chat-win{right:12px;width:calc(100vw - 24px);}
+  .hero-name{font-size:70px;}
+  .wrap{padding:0 22px;}
+  nav{padding:0 22px;}
+  .feat-pills{padding:24px 22px;}
+  .feat-top{padding:30px;}
+}
+</style>
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+
+<!-- LIVE TICKER (replicating AQI app style) -->
+<div class="ticker-wrap">
+  <div class="ticker-track" id="ttrack"></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">⚡ KRISHNA <span>BHATIA</span></div>
+  <ul class="nav-links">
+    <li><a href="#aqi">AQI System</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#exp">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact" class="nav-cta">Get In Touch</a></li>
+  </ul>
+</nav>
+
+<div class="page">
+
+<!-- HERO -->
+<section class="hero wrap">
+  <div class="hero-eye"><span class="dot-live"></span> Available for Internship · B.Tech CSE (AI & ML) · Manav Rachna · Batch 2027</div>
+  <div class="hero-name">KRISHNA<span class="hl">BHATIA</span></div>
+  <div class="hero-role">Data Science & AI Engineer · Building Explainable, Deployed ML Systems</div>
+  <p class="hero-bio">
+    I build ML systems that go beyond accuracy — they explain <em>why</em>.<br>
+    My AQI Early Warning System is <strong>live in production</strong>, predicting air quality for 26 Indian cities using XGBoost + SHAP, serving real-time advisories for 7 vulnerable population groups. Not a notebook. A product.
+  </p>
+  <div class="cta-row">
+    <a href="https://aqi-early-warning-system.vercel.app" target="_blank" class="btn-a">🔴 View Live AQI System →</a>
+    <a href="#projects" class="btn-b">See All Projects</a>
+    <a href="https://github.com/KrishnaBhatia22-11" target="_blank" class="btn-b">GitHub ↗</a>
+  </div>
+  <div class="cert-strip">
+    <span class="cert-chip">✓ Oracle OCI Gen AI Professional 2025</span>
+    <span class="cert-chip">✓ Oracle OCI Data Science Professional 2025</span>
+    <span class="cert-chip">✓ Microsoft Azure AI-900</span>
+  </div>
+</section>
+
+<div class="hairline"></div>
+
+<!-- FEATURED AQI PROJECT -->
+<section class="sec" id="aqi">
+  <div class="wrap">
+    <div class="sec-tag">// 01 · FLAGSHIP PROJECT</div>
+    <div class="sec-h">THE BUILD THAT<br>MATTERS</div>
+
+    <div class="feat-box">
+
+      <!-- Top banner -->
+      <div class="feat-top">
+        <div>
+          <div class="feat-badge">🔴 LIVE · DEPLOYED · BUILD V2 · PWA</div>
+          <div class="feat-title">AI-DRIVEN EARLY WARNING<br>SYSTEM FOR URBAN AQI</div>
+          <div class="feat-sub">With Explainable AI · 26 Indian Cities · XGBoost R²=0.932</div>
+          <p class="feat-desc">
+            A full-stack ML platform that predicts Air Quality Index for 26 Indian cities in real-time, explains every single prediction using SHAP game-theory explainability, and delivers personalised health advisories for 7 vulnerable population groups — children, elderly, asthma/heart patients, pregnant women, athletes. Served through a production FastAPI backend, deployed globally on Vercel. Free forever.
+            <br><br>
+            What no existing platform has — CPCB, SAFAR, IQAir, Breezometer — is an open, explainable, ML-driven system. This project fills that gap and is now live.
+          </p>
+          <a href="https://aqi-early-warning-system.vercel.app" target="_blank" class="feat-cta">🔴 aqi-early-warning-system.vercel.app →</a>
+          <div class="tags">
+            <span class="tg tg-a">XGBoost 2.0</span>
+            <span class="tg tg-a">SHAP TreeExplainer</span>
+            <span class="tg tg-t">FastAPI + Uvicorn</span>
+            <span class="tg tg-t">WAQI Live API</span>
+            <span class="tg tg-t">Google Gemini AI</span>
+            <span class="tg tg-g">React + Vercel</span>
+            <span class="tg tg-g">PWA</span>
+            <span class="tg tg-g">AQI Time Machine</span>
+            <span class="tg tg-a">MLflow Tracking</span>
+            <span class="tg tg-t">Folium + Plotly</span>
+            <span class="tg tg-a">Python 3.13</span>
+          </div>
+        </div>
+
+        <!-- Model performance card -->
+        <div class="model-card">
+          <div class="mc-head">MODEL PERFORMANCE</div>
+          <div class="mc-row"><span class="mc-k">Algorithm</span><span class="mc-v">XGBoost</span></div>
+          <div class="mc-row"><span class="mc-k">R² Score</span><span class="mc-v g">0.932</span></div>
+          <div class="mc-row"><span class="mc-k">MAE</span><span class="mc-v">17.928</span></div>
+          <div class="mc-row"><span class="mc-k">RMSE</span><span class="mc-v">29.500</span></div>
+          <div class="mc-row"><span class="mc-k">5-Fold CV R²</span><span class="mc-v g">0.931 ±0.003</span></div>
+          <div class="mc-row"><span class="mc-k">Training Records</span><span class="mc-v">24,850</span></div>
+          <div class="mc-row"><span class="mc-k">vs Random Forest</span><span class="mc-v g">+0.003 R²</span></div>
+          <div class="shap-section">
+            <div class="shap-head">SHAP FEATURE IMPORTANCE</div>
+            <div class="shap-row">
+              <div class="shap-label-row"><span class="shap-k">PM2.5</span><span class="shap-v">0.4686</span></div>
+              <div class="shap-bar"><div class="shap-fill" style="width:94%"></div></div>
+            </div>
+            <div class="shap-row">
+              <div class="shap-label-row"><span class="shap-k">CO</span><span class="shap-v">0.3059</span></div>
+              <div class="shap-bar"><div class="shap-fill" style="width:61%"></div></div>
+            </div>
+            <div class="shap-row">
+              <div class="shap-label-row"><span class="shap-k">PM10</span><span class="shap-v">0.0641</span></div>
+              <div class="shap-bar"><div class="shap-fill" style="width:22%"></div></div>
+            </div>
+            <div class="shap-row">
+              <div class="shap-label-row"><span class="shap-k">Year (trend)</span><span class="shap-v">0.0389</span></div>
+              <div class="shap-bar"><div class="shap-fill" style="width:12%"></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Stats bar -->
+      <div class="feat-stats">
+        <div class="fstat"><div class="fstat-n">26</div><div class="fstat-l">Cities Live</div></div>
+        <div class="fstat"><div class="fstat-n">24,850</div><div class="fstat-l">Training Records</div></div>
+        <div class="fstat"><div class="fstat-n">0.932</div><div class="fstat-l">R² Score</div></div>
+        <div class="fstat"><div class="fstat-n">7</div><div class="fstat-l">Health Risk Groups</div></div>
+        <div class="fstat"><div class="fstat-n">V2</div><div class="fstat-l">Build · PWA</div></div>
+      </div>
+
+      <!-- Feature pills -->
+      <div class="feat-pills">
+        <div class="fpill">
+          <div class="fp-icon">🧠</div>
+          <div class="fp-title">Explainable AI</div>
+          <div class="fp-desc">Every prediction decomposed by SHAP game-theory. "PM2.5=180 → AQI +152.7 pts. CO=12.9 → AQI +82.9 pts." No other public platform does this. Recruiters see the WHY, not just the WHAT.</div>
+        </div>
+        <div class="fpill">
+          <div class="fp-icon">⚡</div>
+          <div class="fp-title">Live PWA + Time Machine</div>
+          <div class="fp-desc">Progressive Web App with 26 live WAQI stations, threat matrix ranking all cities by AQI, city comparison tool (e.g. Mumbai 88% worse than Delhi), and AQI Time Machine for historical pattern analysis.</div>
+        </div>
+        <div class="fpill">
+          <div class="fp-icon">🏥</div>
+          <div class="fp-title">Health Intelligence</div>
+          <div class="fp-desc">Personalised risk matrix for children, elderly, asthma/heart patients, pregnant women, athletes — across all 6 CPCB categories (Good→Severe). Precautions generated per reading. Nothing in market has this.</div>
+        </div>
+        <div class="fpill">
+          <div class="fp-icon">⚙️</div>
+          <div class="fp-title">Production Backend</div>
+          <div class="fp-desc">FastAPI REST API with 3 production endpoints. Pydantic v2 validation, auto-Swagger docs at /docs. XGBoost + SHAP served as pickle artifacts. Deployed on Render.com. MLflow experiment tracking throughout.</div>
+        </div>
+        <div class="fpill">
+          <div class="fp-icon">🤖</div>
+          <div class="fp-title">AI Chatbot</div>
+          <div class="fp-desc">Google Gemini 1.5 Flash integration for natural language AQI queries. "Is it safe to go running in Jaipur today?" → AI-generated personalised response using live AQI + health profile context.</div>
+        </div>
+        <div class="fpill">
+          <div class="fp-icon">📊</div>
+          <div class="fp-title">Manual Predictor</div>
+          <div class="fp-desc">Any user can enter custom sensor readings (PM2.5, PM10, CO, NO2, NOx, SO2, O3, NH3) and get an instant ML prediction + SHAP explanation + health advisory. Works for cities CPCB doesn't cover.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="hairline"></div>
+
+<!-- OTHER PROJECTS -->
+<section class="sec" id="projects">
+  <div class="wrap">
+    <div class="sec-tag">// 02 · OTHER PROJECTS</div>
+    <div class="sec-h">MORE<br>BUILDS</div>
+    <div class="grid3">
+
+      <div class="pcard a rv">
+        <div class="p-icon">🛸</div>
+        <div class="p-name">TRINETRA</div>
+        <div class="p-desc">AI-powered space exploration assistant. Integrated NASA REST APIs to fetch and visualize planetary data for all 8 planets via automated Python data pipelines and a Streamlit dashboard with ML predictions.</div>
+        <div class="tags">
+          <span class="tg tg-a">NASA APIs</span><span class="tg tg-a">Streamlit</span>
+          <span class="tg tg-t">Python Pipelines</span><span class="tg tg-g">Ongoing</span>
+        </div>
+      </div>
+
+      <div class="pcard t rv">
+        <div class="p-icon">🫁</div>
+        <div class="p-name">MEDICAL CNN</div>
+        <div class="p-desc">TensorFlow CNN on 7,000 chest X-rays achieving 95% validation accuracy across COVID, Pneumonia, and Normal. Data augmentation and class imbalance handling for clinical reliability.</div>
+        <div class="p-metric">95%</div>
+        <div class="p-metric-label">Validation Accuracy · 7K X-rays</div>
+        <div class="tags"><span class="tg tg-t">TensorFlow</span><span class="tg tg-t">CNN</span><span class="tg tg-a">OpenCV</span></div>
+      </div>
+
+      <div class="pcard g rv">
+        <div class="p-icon">❤️</div>
+        <div class="p-name">HEART FAILURE</div>
+        <div class="p-desc">Benchmarked 7 ML algorithms on 918 patient records with 11 clinical features. XGBoost optimized with F1-Score + AUC-ROC ensuring clinical reliability — recall for heart failure cases prioritized over raw accuracy.</div>
+        <div class="p-metric">89%</div>
+        <div class="p-metric-label">XGBoost Accuracy · 7 Models Tested</div>
+        <div class="tags"><span class="tg tg-g">XGBoost</span><span class="tg tg-g">Scikit-learn</span><span class="tg tg-a">AUC-ROC</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="hairline"></div>
+
+<!-- EXPERIENCE -->
+<section class="sec" id="exp">
+  <div class="wrap">
+    <div class="sec-tag">// 03 · EXPERIENCE</div>
+    <div class="sec-h">WHERE I'VE<br>WORKED</div>
+    <div class="timeline">
+      <div class="tl-item rv">
+        <div class="tl-per">May 2025 – April 2026</div>
+        <div class="tl-role">STUDENT PLACEMENT COORDINATOR</div>
+        <div class="tl-org">Dept. of CSE (AI & ML) · Manav Rachna IIRS · Faridabad</div>
+        <div class="tl-desc">Coordinated placement drives for 60+ students, directly liaising with companies to streamline end-to-end campus recruitment. Managed company communications, scheduling, and student-side preparation — developing negotiation, stakeholder management, and communication skills in a high-stakes environment.</div>
+      </div>
+      <div class="tl-item rv">
+        <div class="tl-per">June 2025 – July 2025</div>
+        <div class="tl-role">AI & AUTOMATION INTERN</div>
+        <div class="tl-org">Unsaid Talks</div>
+        <div class="tl-desc">Delivered 4 production-ready AI automation pipelines across 3 frameworks — LangChain, Agno, and n8n — reducing manual effort for study planning, content creation, and recipe generation workflows to near zero.</div>
+      </div>
+      <div class="tl-item rv">
+        <div class="tl-per">January 2025 – Present</div>
+        <div class="tl-role">ML & DESIGN HEAD</div>
+        <div class="tl-org">MRAC AIML Club · Manav Rachna IIRS</div>
+        <div class="tl-desc">Led the club's technical activities, organising a Kaggle ML competition for 30+ students building a Spotify recommendation system — the highest-engagement session of the year. Mentors juniors through guided, project-based ML learning rather than pure tutorial consumption.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="hairline"></div>
+
+<!-- SKILLS -->
+<section class="sec" id="skills">
+  <div class="wrap">
+    <div class="sec-tag">// 04 · SKILLS</div>
+    <div class="sec-h">TECH<br>STACK</div>
+    <div class="sk-grid">
+      <div class="sk-group rv"><div class="sk-head">Languages</div><div class="pills"><span class="pill">Python</span><span class="pill">C++</span><span class="pill">C</span><span class="pill">SQL</span></div></div>
+      <div class="sk-group rv"><div class="sk-head">ML / DL / XAI</div><div class="pills"><span class="pill">XGBoost</span><span class="pill">TensorFlow</span><span class="pill">Scikit-learn</span><span class="pill">SHAP</span><span class="pill">MLflow</span><span class="pill">Pandas</span><span class="pill">NumPy</span><span class="pill">OpenCV</span></div></div>
+      <div class="sk-group rv"><div class="sk-head">Cloud & LLM</div><div class="pills"><span class="pill">Oracle OCI</span><span class="pill">MS Azure</span><span class="pill">LangChain</span><span class="pill">Agno</span><span class="pill">n8n</span><span class="pill">Google Gemini</span></div></div>
+      <div class="sk-group rv"><div class="sk-head">Backend · Frontend · Deploy</div><div class="pills"><span class="pill">FastAPI</span><span class="pill">Pydantic</span><span class="pill">REST APIs</span><span class="pill">Streamlit</span><span class="pill">React</span><span class="pill">Folium</span><span class="pill">Plotly</span><span class="pill">Vercel</span><span class="pill">Git</span></div></div>
+    </div>
+  </div>
+</section>
+
+<div class="hairline"></div>
+
+<!-- EDUCATION + ACHIEVEMENTS -->
+<section class="sec">
+  <div class="wrap">
+    <div class="sec-tag">// 05 · EDUCATION</div>
+    <div class="sec-h">ACADEMICS</div>
+    <div class="edu-grid">
+      <div class="edu-c rv"><div class="edu-n">7.68</div><div class="edu-l">B.Tech CGPA · 2027</div><div class="edu-i">CSE (AI & ML)<br>Manav Rachna IIRS</div></div>
+      <div class="edu-c rv"><div class="edu-n">75.4%</div><div class="edu-l">Class XII · 2023</div><div class="edu-i">Senior Secondary</div></div>
+      <div class="edu-c rv"><div class="edu-n">84.8%</div><div class="edu-l">Class X · 2022</div><div class="edu-i">Secondary School</div></div>
+    </div>
+
+    <div style="margin-top:64px">
+      <div class="sec-tag">// 06 · ACHIEVEMENTS</div>
+      <div class="sec-h" style="font-size:52px">HIGHLIGHTS</div>
+      <div class="ach-list">
+        <div class="ach-item rv"><span class="ach-icon">🏅</span><div class="ach-text"><strong>Special Mention · IIIT Delhi Hackathon 2024</strong>AI-based misinformation detection system recognised at national-level hackathon competing against hundreds of teams across India.</div></div>
+        <div class="ach-item rv"><span class="ach-icon">🥇</span><div class="ach-text"><strong>1st Position · College Mathematical Fest</strong>Poster "Mathematics in Music" — exploring mathematical structures underlying music theory, rhythm, and composition.</div></div>
+        <div class="ach-item rv"><span class="ach-icon">📜</span><div class="ach-text"><strong>Certificate of Appreciation · Haryana State Productivity Council</strong>Concept paper "Intellectual Property Protection Strategy for Startups" recognised at state government level.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<div class="contact wrap" id="contact">
+  <div class="c-big">LET'S<br>WORK.</div>
+  <div class="c-email">krishnabhatia09@gmail.com · +91 9971459200</div>
+  <div class="c-links">
+    <a href="https://aqi-early-warning-system.vercel.app" target="_blank" class="clink">⚡ Live AQI System</a>
+    <a href="https://linkedin.com/in/krishna-bhatia" target="_blank" class="clink">🔗 LinkedIn</a>
+    <a href="https://github.com/KrishnaBhatia22-11" target="_blank" class="clink">⌨️ GitHub</a>
+    <a href="mailto:krishnabhatia09@gmail.com" class="clink">📧 Email Me</a>
+  </div>
+  <p style="margin-top:40px;font-family:var(--fm);font-size:8px;color:#1E293B;letter-spacing:2px">B.TECH CSE (AI & ML) · MANAV RACHNA IIRS · BATCH 2027 · CGPA 7.68 · ROLL 1/23/SET/BCS/358</p>
+</div>
+
+</div><!-- end .page -->
+
+<!-- CHATBOT -->
+<button class="chat-fab" id="cfab" onclick="toggleChat()">💬</button>
+<div class="chat-win" id="cwin">
+  <div class="chat-head">
+    <div class="ch-info">
+      <div class="ch-title">⚡ ASK ABOUT KRISHNA</div>
+      <div class="ch-sub">Smart recruiter assistant · Project details · Skills · Why hire</div>
+    </div>
+    <div class="ch-status"><span class="dot-live" style="width:5px;height:5px"></span>ONLINE</div>
+  </div>
+  <div class="chat-msgs" id="cmsgs">
+    <div class="msg msg-b">Hi! I'm here to answer any recruiter questions about Krishna — his projects, skills, or why he's a strong fit for data science roles. 👋</div>
+  </div>
+  <div class="chat-qs">
+    <span class="cq" onclick="ask('Tell me about the AQI project')">AQI Project</span>
+    <span class="cq" onclick="ask('What are Krishna\\'s technical skills?')">Tech Skills</span>
+    <span class="cq" onclick="ask('Why should we hire Krishna for Data Science?')">Why Hire?</span>
+    <span class="cq" onclick="ask('What is SHAP explainability?')">SHAP?</span>
+    <span class="cq" onclick="ask('Tell me about model performance')">Model Stats</span>
+  </div>
+  <div class="chat-in-row">
+    <input class="chat-in" id="cin" placeholder="Ask anything..." onkeydown="if(event.key==='Enter')send()">
+    <button class="chat-send" onclick="send()">→</button>
+  </div>
+</div>
+
+<script>
+/* ── CONSTELLATION BACKGROUND ── */
+const cv = document.getElementById('bg');
+const cx = cv.getContext('2d');
+let pts = [];
+function resize() { cv.width = innerWidth; cv.height = innerHeight; }
+function init() {
+  pts = [];
+  const n = Math.min(Math.floor(innerWidth * innerHeight / 12000), 120);
+  for (let i = 0; i < n; i++) pts.push({ x: Math.random()*cv.width, y: Math.random()*cv.height, vx:(Math.random()-.5)*.25, vy:(Math.random()-.5)*.25, r:Math.random()*1.4+.4 });
+}
+function frame() {
+  cx.clearRect(0,0,cv.width,cv.height);
+  pts.forEach(p => {
+    p.x+=p.vx; p.y+=p.vy;
+    if(p.x<0||p.x>cv.width)p.vx*=-1;
+    if(p.y<0||p.y>cv.height)p.vy*=-1;
+    cx.beginPath(); cx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    cx.fillStyle='rgba(245,158,11,0.35)'; cx.fill();
+  });
+  for(let i=0;i<pts.length;i++){
+    for(let j=i+1;j<pts.length;j++){
+      const d=Math.hypot(pts[i].x-pts[j].x,pts[i].y-pts[j].y);
+      if(d<110){
+        cx.beginPath(); cx.moveTo(pts[i].x,pts[i].y); cx.lineTo(pts[j].x,pts[j].y);
+        cx.strokeStyle=`rgba(245,158,11,${.07*(1-d/110)})`; cx.lineWidth=.5; cx.stroke();
+      }
+    }
+  }
+  requestAnimationFrame(frame);
+}
+resize(); init(); frame();
+window.addEventListener('resize',()=>{resize();init();});
+
+/* ── TICKER ── */
+const TD = [
+  {l:'XGBOOST R²',v:'0.932'},{l:'5-FOLD CV',v:'0.931 ±0.003'},
+  {l:'CITIES LIVE',v:'26 INDIA'},{l:'TRAINING RECORDS',v:'24,850'},
+  {l:'SHAP IMPORTANCE PM2.5',v:'0.4686'},{l:'DEPLOYMENT',v:'VERCEL V2'},
+  {l:'PWA',v:'ENABLED'},{l:'HEALTH GROUPS',v:'7 PROFILES'},
+  {l:'CGPA',v:'7.68'},{l:'CERTIFICATIONS',v:'3 CLOUD'},
+  {l:'STUDENTS PLACED',v:'60+'},{l:'CNN ACCURACY',v:'95%'},
+  {l:'ML ALGORITHMS TESTED',v:'7'},{l:'DATASET',v:'CPCB 2015–2020'},
+  {l:'BACKEND',v:'FASTAPI'},{l:'BATCH',v:'2027'},
+];
+const tt = document.getElementById('ttrack');
+const html = [...TD,...TD].map(d=>`<div class="t-item"><span class="lbl">${d.l}</span><span class="val">${d.v}</span></div>`).join('');
+tt.innerHTML = html;
+
+/* ── SCROLL REVEAL ── */
+const obs = new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')}),{threshold:.08});
+document.querySelectorAll('.rv').forEach(el=>obs.observe(el));
+
+/* ── CHATBOT ── */
+const KB = {
+  aqi: `Here's what makes the AQI project exceptional:\n\n📍 LIVE at aqi-early-warning-system.vercel.app\n\n🤖 MODEL\n• XGBoost trained on 24,850 clean records from CPCB 2015-2020\n• R²=0.932 · MAE=17.928 · RMSE=29.500\n• 5-Fold CV: mean 0.931, std ±0.003 (no overfitting)\n• Beat Random Forest (0.929 R²)\n\n📊 EXPLAINABILITY\n• SHAP TreeExplainer decomposes every prediction\n• Example: "PM2.5=180 pushed AQI +152.7 pts · CO=12.9 pushed AQI +82.9 pts"\n\n⚡ FEATURES\n• 26 cities with live WAQI data\n• Threat Matrix ranking cities by AQI in real-time\n• AQI Time Machine (historical comparisons)\n• City-vs-city comparison (e.g. Delhi vs Mumbai)\n• PWA (installable on mobile)\n• Gemini AI chatbot for natural language queries\n• Manual predictor for any sensor reading\n• Build V2 deployed on Vercel`,
+
+  skills: `Krishna's full data science stack:\n\n🔬 ML/AI/XAI\nXGBoost · TensorFlow · Scikit-learn · SHAP · MLflow · Pandas · NumPy · OpenCV\n\n☁️ Cloud Platforms (Certified)\nOracle OCI Gen AI & Data Science · Microsoft Azure AI-900\n\n🤖 LLM & Automation\nLangChain · Agno · n8n · Google Gemini API\n\n⚙️ Backend\nFastAPI · Pydantic v2 · REST APIs · Uvicorn\n\n🌐 Frontend & Viz\nReact · Streamlit · Folium (maps) · Plotly\n\n🔧 Core CS\nDSA · OOPs · DBMS · OS · Computer Networks · SQL`,
+
+  hire: `3 reasons Krishna stands out for Data Science:\n\n1️⃣ DEPLOYED PRODUCTION SYSTEM\nThe AQI project isn't a Jupyter notebook — it's a live, globally deployed full-stack ML system with a production REST API, real-time data, PWA support, and Build V2. Most students have projects; Krishna has a product that's being used.\n\n2️⃣ EXPLAINABLE AI — SENIOR-LEVEL THINKING\nHe doesn't just achieve R²=0.932. He uses SHAP TreeExplainer to make every prediction interpretable. XAI is a mature field that most freshers don't even know exists. This shows depth beyond surface-level ML.\n\n3️⃣ COMPLETE PIPELINE OWNERSHIP\nData collection → preprocessing (29K→24.8K records) → model training → FastAPI backend → React frontend → Vercel deployment → MLflow tracking. He understands the entire production data science lifecycle, not just the modelling part.`,
+
+  shap: `SHAP (SHapley Additive exPlanations) uses cooperative game theory to explain ML predictions.\n\nIn the AQI system:\n• TreeExplainer computes EXACT SHAP values for XGBoost (not approximations)\n• Every prediction shows: "WHY is the AQI this number?"\n• Example output: "PM2.5=180 → +152.7 pts · CO=12.9 → +82.9 pts · PM10=78 → -42.7 pts"\n\nTop SHAP importances:\n• PM2.5 · 0.4686 (dominant driver)\n• CO · 0.3059 (vehicle emissions)\n• PM10 · 0.0641 (dust particles)\n• Year · 0.0389 (temporal pollution trend)\n\nThis is what separates the AQI project from EVERY existing platform — CPCB, SAFAR, IQAir, Breezometer. None of them explain WHY. Krishna's system does.`,
+
+  model: `Full model performance comparison:\n\n┌──────────────┬────────┬────────┬───────┐\n│ Model        │ MAE    │ RMSE   │  R²   │\n├──────────────┼────────┼────────┼───────┤\n│ XGBoost ✓   │ 17.928 │ 29.500 │ 0.932 │\n│ Random Forest│ 18.239 │ 30.048 │ 0.929 │\n└──────────────┴────────┴────────┴───────┘\n\n5-Fold Cross-Validation (XGBoost):\nFolds: [0.925, 0.930, 0.935, 0.933, 0.934]\nMean: 0.931 · Std: ±0.003\n→ Low variance confirms consistent generalisation, not overfitting\n\nDataset: 29,531 raw → 24,850 clean records\nCities: 26 Indian cities · Years: 2015–2020\nFeatures: PM2.5, PM10, NO, NO2, NOx, NH3, CO, SO2, O3 + temporal`,
+
+  default: `I can answer questions about:\n\n• AQI Project — architecture, model, live features\n• Technical Skills — full stack breakdown\n• Why Hire — top 3 differentiators\n• SHAP Explainability — how it works\n• Model Performance — detailed metrics\n• TRINETRA, Medical CNN, Heart Failure projects\n• Experience — internships, leadership roles\n• Certifications — Oracle OCI, Azure\n\nTry the quick questions above or type your own!`
+};
+
+function getReply(q) {
+  const l = q.toLowerCase();
+  if(l.includes('aqi')||l.includes('air quality')||l.includes('warning'))return KB.aqi;
+  if(l.includes('skill')||l.includes('stack')||l.includes('tech'))return KB.skills;
+  if(l.includes('hire')||l.includes('why')||l.includes('stand out')||l.includes('select')||l.includes('choose'))return KB.hire;
+  if(l.includes('shap')||l.includes('explain')||l.includes('xai'))return KB.shap;
+  if(l.includes('model')||l.includes('r2')||l.includes('performance')||l.includes('accuracy')||l.includes('metric'))return KB.model;
+  return KB.default;
+}
+
+function toggleChat(){
+  const w=document.getElementById('cwin'),f=document.getElementById('cfab');
+  const on=w.classList.toggle('active');
+  f.classList.toggle('active',on);
+  f.textContent=on?'✕':'💬';
+}
+
+function addMsg(t,user){
+  const c=document.getElementById('cmsgs');
+  const d=document.createElement('div');
+  d.className='msg '+(user?'msg-u':'msg-b');
+  d.style.whiteSpace='pre-wrap';
+  d.textContent=t;
+  c.appendChild(d);
+  c.scrollTop=c.scrollHeight;
+}
+
+function send(){
+  const i=document.getElementById('cin');
+  const q=i.value.trim();if(!q)return;
+  i.value='';addMsg(q,true);
+  setTimeout(()=>addMsg(getReply(q),false),350);
+}
+
+function ask(q){addMsg(q,true);setTimeout(()=>addMsg(getReply(q),false),350);}
+</script>
+</body>
+</html>
